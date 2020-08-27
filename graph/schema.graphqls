@@ -1,0 +1,75 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+scalar Time
+
+type User {
+    id: ID!
+    username: String!
+    email: String!
+    phoneNumber: String!
+    password: String!
+    createdAt: Time!
+}
+
+input UserInput {
+    username: String!
+    email: String!
+    phoneNumber: String!
+    password: String!
+}
+
+type Category {
+    name: String!
+    description: String!
+}
+
+input CategoryInput {
+    name: String!
+    description: String!
+}
+
+type Product {
+    id: ID!
+    category: Category!
+    Name: String!
+    Price: Int!
+    Brand: String
+    Description: String
+    seller: User!
+}
+
+input ProductInput {
+    categoryID: String!
+    name: String!
+    price: Int!
+    brand: String
+    description: String
+    sellerUsername: String!
+}
+
+type Query {
+    category(name: String!): Category!
+    categories: [Category!]!
+    product(id: String!): Product!
+    productsInCategory(categoryName: String!): [Product!]
+    products: [Product!]!
+    user(username: String!): User!
+    users: [User!]!
+    sellerProducts(sellerUsername: String!): [Product!]
+}
+
+scalar Map
+
+type Mutation {
+    createUser(input: UserInput!): User!
+    updateUser(username: String!, changes: Map!): User
+    deleteUser(username: String!): String!
+    createCategory(input: CategoryInput!): Category!
+    updateCategory(name: String!, changes: Map!): Category
+    deleteCategory(name: String!): String!
+    createProduct(input: ProductInput!): Product!
+    updateProduct(id: String!, changes: Map!): Product
+    deleteProduct(id: String!): String!
+}
